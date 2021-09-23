@@ -1,0 +1,143 @@
+user@host ~ % curl -X GET http://localhost:8080/products -u user:password -v 
+Note: Unnecessary use of -X or --request, GET is already inferred.
+*   Trying ::1...
+* TCP_NODELAY set
+* Connected to localhost (::1) port 8080 (#0)
+* Server auth using Basic with user 'user'
+> GET /products HTTP/1.1
+> Host: localhost:8080
+> Authorization: Basic dXNlcjpwYXNzd29yZA==
+> User-Agent: curl/7.64.1
+> Accept: */*
+> 
+< HTTP/1.1 200 
+< Set-Cookie: JSESSIONID=64166D3EC5A56DCA271CC9F27107E964; Path=/; HttpOnly
+< X-Content-Type-Options: nosniff
+< X-XSS-Protection: 1; mode=block
+< Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+< Pragma: no-cache
+< Expires: 0
+< X-Frame-Options: DENY
+< Content-Type: application/json
+< Transfer-Encoding: chunked
+< Date: Thu, 23 Sep 2021 12:28:55 GMT
+< 
+* Connection #0 to host localhost left intact
+[{"productId":1,"description":"bigger giant golden dragon egg","type":"FOOD"},{"productId":2,"description":"camionero","type":"VEHICLE"}]* Closing connection 0
+
+user@host ~ % curl -X POST http://localhost:8080/products -u employee:password -H "Content-Type: application/json"  -d '{"description":"bigger giant egg","type":"FOOD"}' -v  
+Note: Unnecessary use of -X or --request, POST is already inferred.
+*   Trying ::1...
+* TCP_NODELAY set
+* Connected to localhost (::1) port 8080 (#0)
+* Server auth using Basic with user 'employee'
+> POST /products HTTP/1.1
+> Host: localhost:8080
+> Authorization: Basic ZW1wbG95ZWU6cGFzc3dvcmQ=
+> User-Agent: curl/7.64.1
+> Accept: */*
+> Content-Type: application/json
+> Content-Length: 48
+> 
+* upload completely sent off: 48 out of 48 bytes
+< HTTP/1.1 200 
+< Set-Cookie: JSESSIONID=2818A826B52566299AC3FC56E18923F9; Path=/; HttpOnly
+< X-Content-Type-Options: nosniff
+< X-XSS-Protection: 1; mode=block
+< Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+< Pragma: no-cache
+< Expires: 0
+< X-Frame-Options: DENY
+< Content-Type: application/json
+< Transfer-Encoding: chunked
+< Date: Thu, 23 Sep 2021 12:14:34 GMT
+< 
+* Connection #0 to host localhost left intact
+{"productId":3,"description":"bigger giant egg","type":"FOOD"}* Closing connection 0
+
+user@host ~ % curl -X POST http://localhost:8080/products -u employee:12345678 -H "Content-Type: application/json"  -d '{"description":"motoretta","type":"VEHICLE"}' -v
+Note: Unnecessary use of -X or --request, POST is already inferred.
+*   Trying ::1...
+* TCP_NODELAY set
+* Connected to localhost (::1) port 8080 (#0)
+* Server auth using Basic with user 'employee'
+> POST /products HTTP/1.1
+> Host: localhost:8080
+> Authorization: Basic ZW1wbG95ZWU6MTIzNDU2Nzg=
+> User-Agent: curl/7.64.1
+> Accept: */*
+> Content-Type: application/json
+> Content-Length: 44
+> 
+* upload completely sent off: 44 out of 44 bytes
+< HTTP/1.1 401 
+* Authentication problem. Ignoring this.
+< WWW-Authenticate: Basic realm="Realm"
+< X-Content-Type-Options: nosniff
+< X-XSS-Protection: 1; mode=block
+< Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+< Pragma: no-cache
+< Expires: 0
+< X-Frame-Options: DENY
+< Content-Type: application/json
+< Transfer-Encoding: chunked
+< Date: Thu, 23 Sep 2021 12:16:50 GMT
+< 
+* Connection #0 to host localhost left intact
+{"timestamp":"2021-09-23T12:16:50.527+00:00","status":401,"error":"Unauthorized","path":"/products"}* Closing connection 0
+
+user@host ~ % curl -X POST http://localhost:8080/products -u user:password -H "Content-Type: application/json"  -d '{"description":"motoretta","type":"VEHICLE"}' -v
+Note: Unnecessary use of -X or --request, POST is already inferred.
+*   Trying ::1...
+* TCP_NODELAY set
+* Connected to localhost (::1) port 8080 (#0)
+* Server auth using Basic with user 'user'
+> POST /products HTTP/1.1
+> Host: localhost:8080
+> Authorization: Basic dXNlcjpwYXNzd29yZA==
+> User-Agent: curl/7.64.1
+> Accept: */*
+> Content-Type: application/json
+> Content-Length: 44
+> 
+* upload completely sent off: 44 out of 44 bytes
+< HTTP/1.1 403 
+< Set-Cookie: JSESSIONID=0B0A6DEFCB07B27B5A6CD3ECA836C98E; Path=/; HttpOnly
+< X-Content-Type-Options: nosniff
+< X-XSS-Protection: 1; mode=block
+< Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+< Pragma: no-cache
+< Expires: 0
+< X-Frame-Options: DENY
+< Content-Type: application/json
+< Transfer-Encoding: chunked
+< Date: Thu, 23 Sep 2021 12:17:56 GMT
+< 
+* Connection #0 to host localhost left intact
+{"timestamp":"2021-09-23T12:17:56.377+00:00","status":403,"error":"Forbidden","path":"/products"}* Closing connection 0
+
+user@host ~ % curl -X DELETE http://localhost:8080/products/0 -u employee:password -v
+*   Trying ::1...
+* TCP_NODELAY set
+* Connected to localhost (::1) port 8080 (#0)
+* Server auth using Basic with user 'employee'
+> DELETE /products/0 HTTP/1.1
+> Host: localhost:8080
+> Authorization: Basic ZW1wbG95ZWU6cGFzc3dvcmQ=
+> User-Agent: curl/7.64.1
+> Accept: */*
+> 
+< HTTP/1.1 404 
+< Set-Cookie: JSESSIONID=2683B5CE7A401304F2467B1839C0D27B; Path=/; HttpOnly
+< X-Content-Type-Options: nosniff
+< X-XSS-Protection: 1; mode=block
+< Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+< Pragma: no-cache
+< Expires: 0
+< X-Frame-Options: DENY
+< Content-Type: application/json
+< Transfer-Encoding: chunked
+< Date: Thu, 23 Sep 2021 12:21:02 GMT
+< 
+* Connection #0 to host localhost left intact
+{"timestamp":"2021-09-23T12:21:02.071+00:00","status":404,"error":"Not Found","path":"/products/0"}* Closing connection 0
