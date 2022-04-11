@@ -1,13 +1,8 @@
 package com.example.demo.algo;
 
-public class Fibo {
+public class Func {
 	
-	/**
-	 * 
-	 * @param n position in the fibonacci sequence
-	 * @return the n-th number in the fibonacci sequence
-	 */
-	static int fibo_lin(int n) {
+	static int f(int n) {
 		if(n < 0) {
 			throw new IndexOutOfBoundsException();
 		}
@@ -15,7 +10,7 @@ public class Fibo {
 		int a = 0;
 		int b = 1;
 		
-		for(int i=0; i< n; i++) {
+		for(int i=0; i<n; i++) {
 			int c = a + b;
 			a = b;
 			b = c;
@@ -24,12 +19,7 @@ public class Fibo {
 		return a;
 	}
 	
-	/**
-	 * 
-	 * @param n position in the fibonacci sequence
-	 * @return the n-th number in the fibonacci sequence
-	 */
-	static int fibo_rec(int n) {
+	static int g(int n) {
 		if(n < 0) {
 			throw new IndexOutOfBoundsException();
 		}
@@ -42,6 +32,6 @@ public class Fibo {
 			return 1;
 		}
 		
-		return fibo_rec(n-1) + fibo_rec(n-2);
+		return g(n-1) + g(n-2);
 	}
 }
